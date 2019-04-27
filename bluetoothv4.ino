@@ -25,7 +25,7 @@ void loop() {
   if (Serial.available() > 0) {
     data = Serial.read();
     
-    // First, send 'p', 't', or 'k', for pump, tile, or kettle
+    // First, send 'p', 't', or 'k', for pump, tilt, or kettle
     // Then, send 0-9 as char, multiply by 1000 for delay
     // subtracting '0' from char gives int value
     // while loop blocks until next char received (0-9)
