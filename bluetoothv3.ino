@@ -1,19 +1,27 @@
 #include <SoftwareSerial.h>
 SoftwareSerial mySerial(0, 1); // RX, TX
 
-#define pump 13
-#define tilt 12
-#define kettle 11
+#define pump 12 // pin 13 flickers at startup, so not safe to use with relay
+                // check this out: https://forum.arduino.cc/index.php?topic=117895.0
+#define tilt 11
+#define kettle 10
+
+int firmness = 0;
+int honey = 0;
 
 void setup() {
   pinMode(pump, OUTPUT);
   pinMode(tilt, OUTPUT);
   pinMode(kettle, OUTPUT);
+
+  // Initialize outputs
+  // pump and tilt are both active LOW, not HIGH
+  digitalWrite(pump, HIGH); 
+  digitalWrite(tilt, HIGH);
+  digitalWrite(kettle, LOW);
+  
   Serial.begin(9600);
   mySerial.begin(9600);
-  digitalWrite(pump, HIGH);
-  digitalWrite(tilt, LOW);
-  digitalWrite(kettle, LOW);
 }
 
 void loop() {
@@ -37,8 +45,8 @@ void loop() {
       oldByte = incomingByte;
     }
 
-    int firmness = incomingByte/10;
-    int honey = incomingByte%10;
+    firmness = incomingByte/10;
+    honey = incomingByte % 10;
 
     digitalWrite(kettle, HIGH);//Turn on Kettle
     //delay(3000);//Change this!
@@ -50,6 +58,9 @@ void loop() {
 
     //delay(3000);//time to settle
     
+    // have not gotten this part to work correctly yet
+    // seems like bluetooth always responding with '51'
+    // and I do not know what that means
     digitalWrite(pump,HIGH);//turn on honey pump
     delay(honey*1000);//Change this!
     digitalWrite(pump,LOW);//turn off honey pump
