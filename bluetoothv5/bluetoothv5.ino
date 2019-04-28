@@ -1,21 +1,19 @@
 #define pump   12 // pin 13 flickers at startup, so not safe to use with relay
                   // check this link: https://forum.arduino.cc/index.php?topic=117895.0
 #define kettle 10
-#define tilt1  4
-#define tilt2  3
+#define tilt1  3
+#define tilt2  4
 
 char data;
 
 void setup() {
   pinMode(pump, OUTPUT);
-  pinMode(tilt1, OUTPUT);
   pinMode(tilt2, OUTPUT);
   pinMode(kettle, OUTPUT);
 
   // Initialize outputs to off state
   // pump active LOW, not HIGH
   digitalWrite(pump, HIGH); 
-  digitalWrite(tilt1, LOW); 
   digitalWrite(tilt2, LOW); 
   digitalWrite(kettle, LOW);
   
@@ -47,16 +45,16 @@ void loop() {
     // wait after turning off kettle
     delay(5000);
 
-    // tilts forward
-    digitalWrite(tilt1, HIGH);
+    // tilt forward
+    analogWrite(tilt1, 191);
     digitalWrite(tilt2, LOW);
-    delay(4000);
-    digitalWrite(tilt1, LOW);
+    delay(5500);
+    analogWrite(tilt1, 0);
     delay(1000);
-
-    // tilts backward
+  
+    // tilt backward
     digitalWrite(tilt2, HIGH);
-    digitalWrite(tilt1, LOW);
+    analogWrite(tilt1, 0);
     delay(4000);
     digitalWrite(tilt2, LOW);
 

@@ -15,7 +15,7 @@ void loop() {
   // tilt forward
   analogWrite(tilt1, 191);
   digitalWrite(tilt2, LOW);
-  delay(5000);
+  delay(5500);
   analogWrite(tilt1, 0);
   delay(1000);
 
