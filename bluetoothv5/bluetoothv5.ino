@@ -27,14 +27,14 @@ void loop() {
     data = Serial.read();
     
     // receive 1, 2, or 3 and convert to int
-    int firmness = atoi(data);
+    int firmness = data - '0';
 
     // receive second char 
     while(!Serial.available()) {}
     data = Serial.read();
     
     // 0, 1, 2, or 3
-    int honey = atoi(data);
+    int honey = data - '0';
 
     // MAIN control loop
     // turns on kettle
