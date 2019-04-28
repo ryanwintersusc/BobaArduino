@@ -1,19 +1,22 @@
-#define pump 12 // pin 13 flickers at startup, so not safe to use with relay
-                // check this link: https://forum.arduino.cc/index.php?topic=117895.0
-#define tilt 11
+#define pump   12 // pin 13 flickers at startup, so not safe to use with relay
+                  // check this link: https://forum.arduino.cc/index.php?topic=117895.0
 #define kettle 10
+#define tilt1  4
+#define tilt2  3
 
 char data;
 
 void setup() {
   pinMode(pump, OUTPUT);
-  pinMode(tilt, OUTPUT);
+  pinMode(tilt1, OUTPUT);
+  pinMode(tilt2, OUTPUT);
   pinMode(kettle, OUTPUT);
 
   // Initialize outputs to off state
-  // pump and tilt are both active LOW, not HIGH -> will need to check kettle
+  // pump active LOW, not HIGH
   digitalWrite(pump, HIGH); 
-  digitalWrite(tilt, HIGH); 
+  digitalWrite(tilt1, LOW); 
+  digitalWrite(tilt2, LOW); 
   digitalWrite(kettle, LOW);
   
   Serial.begin(9600);
@@ -41,22 +44,31 @@ void loop() {
         break;
         
       case 't':
-        while(!Serial.available()) {}
-        data = Serial.read();
-        
-        digitalWrite(tilt, LOW);
-        delay( (data - '0')*1000 );
-        digitalWrite(tilt, HIGH);
-        delay(1000);
+//        while(!Serial.available()) {}
+//        data = Serial.read();
+
+        // tilts forward
+        digitalWrite(tilt1, HIGH);
+        digitalWrite(tilt2, LOW);
+        delay(2000);
+        digitalWrite(tilt1, LOW);
+        delay(2000);
+
+        // tilts backward
+        digitalWrite(tilt2, HIGH);
+        digitalWrite(tilt1, LOW);
+        delay(2000);
+        digitalWrite(tilt2, LOW);
+        delay(2000);
         break;
         
       case 'k':
         while(!Serial.available()) {}
         data = Serial.read();
         
-        digitalWrite(kettle, LOW);
-        delay( (data - '0')*1000 );
         digitalWrite(kettle, HIGH);
+        delay( (data - '0')*1000 );
+        digitalWrite(kettle, LOW);
         delay(1000);
         break;
     }
