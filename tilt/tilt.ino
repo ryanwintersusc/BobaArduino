@@ -7,7 +7,6 @@ void setup() {
 
   // Initialize outputs to off state
   // pump active LOW, not HIGH
-  //digitalWrite(tilt1, LOW); 
   digitalWrite(tilt2, LOW); 
 }
 
@@ -17,7 +16,7 @@ void loop() {
   digitalWrite(tilt2, LOW);
   delay(5500);
   analogWrite(tilt1, 0);
-  delay(1000);
+  delay(3000);
 
   // tilt backward
   digitalWrite(tilt2, HIGH);

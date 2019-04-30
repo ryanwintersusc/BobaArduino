@@ -39,18 +39,18 @@ void loop() {
     // MAIN control loop
     // turns on kettle
     digitalWrite(kettle, HIGH);
-    delay((firmness*10000) + 190000);
+    delay((firmness*30000) + 210000);
     digitalWrite(kettle, LOW);
 
     // wait after turning off kettle
-    delay(5000);
+    delay(8000);
 
     // tilt forward
     analogWrite(tilt1, 191);
     digitalWrite(tilt2, LOW);
     delay(5500);
     analogWrite(tilt1, 0);
-    delay(1000);
+    delay(3000);
   
     // tilt backward
     digitalWrite(tilt2, HIGH);
@@ -62,7 +62,7 @@ void loop() {
     delay(5000);
     
     digitalWrite(pump, LOW);
-    delay(honey*2000);
+    delay(honey*10000);
     digitalWrite(pump, HIGH);
     delay(1000);
      
